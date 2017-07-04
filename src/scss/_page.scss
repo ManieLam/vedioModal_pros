@@ -1,0 +1,13 @@
+.p-single {
+  padding-bottom: 60px;
+}
+
+.btn_no_style::after{
+    height: 0;
+    width: 0;
+}
+
+.btn_no_style{
+    background-color: #eee;
+    border-radius: none;
+}

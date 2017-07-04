@@ -1,0 +1,26 @@
+.single-header {
+    padding: 10px 20px;
+    background: #fff;
+}
+
+.single-lists_cell {
+    padding: 10px 0;
+    border-bottom: 1rpx solid #ececec;
+}
+
+.col_ff7e00 {
+    color: #ff7e00;
+}
+
+.btn_min {
+    color: $col_act;
+    border: 1rpx solid $col_act;
+    background: #fff;
+    margin: 10px 0;
+}
+
+.btn_min_hover,
+.btn_min_act {
+    background: $col_act;
+    color: #fff;
+}

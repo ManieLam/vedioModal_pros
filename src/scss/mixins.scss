@@ -1,0 +1,42 @@
+// 公共方法
+@mixin clearfix() {
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin line_clamp($lines) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $lines;
+}
+
+@mixin text_ellips() {
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+// 封面遮罩层
+@mixin view_cover($background) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: $background;
+    color: #fff;
+}
+
+// 字体 变量
+$font_min: 10pt;
+$font_mid:12pt;
+$font_lar:18pt;
+$font_desc_h:#595757;
+$font_desc:#c4c4c4;
+$col_act: #ff7e00;

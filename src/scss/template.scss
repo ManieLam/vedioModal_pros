@@ -1,0 +1,83 @@
+/* 顶部tab */
+
+#navbar {
+    display: flex;
+    height: 80rpx;
+    line-height: 28rpx;
+}
+
+#navbar .item {
+    flex: 1;
+    text-align: center;
+    font-weight: 500;
+    color: #f26800;
+    background: #fff;
+}
+
+#navbar .item.active {
+    position: relative;
+    background-color: #f26800;
+    color: #fff;
+}
+
+// #navbar .item.active:after {
+//     content: '';
+//     position: absolute;
+//     display: block;
+//     left: 0;
+//     bottom: 0;
+//     height: 5rpx;
+//     width: 100%;
+//     background-color: #fff;
+// }
+
+/*音乐播放条*/
+
+.music-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 142rpx;
+    padding: 10px;
+    box-sizing: border-box;
+    background: #f1f1f1;
+    .info {
+        align-items: center;
+    }
+    .control {
+        position: absolute;
+        bottom: 142rpx;
+        left: 0;
+        width: 100%;
+        z-index: 50;
+    }
+    .progress {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .progress .current,
+    .progress .total {
+        flex: 0 0 110rpx;
+        text-align: center;
+        color: #808080;
+        font-size: 24rpx;
+    }
+    .time-bar {
+        flex: 1;
+        position: relative;
+        height: 4rpx;
+        overflow: hidden;
+        background-color: #fff;
+    }
+    .time-bar .time-play {
+        position: absolute;
+        left: -100%;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #84ccc9;
+        transition: all 1s linear;
+    }
+}

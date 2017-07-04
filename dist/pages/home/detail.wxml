@@ -1,0 +1,35 @@
+<!-- pages/home/detail.wxml -->
+<import src="../template/musicBar"/>
+<view class="m-lists_bar">
+    <!-- 头部 -->
+    <view class="single-header lists-list__cell "  >
+        <image src="{{bookList.thumbnail}}?imageView2/1/w/250/h/250" class="cover_img cell_image"></image>
+        <view class="lists-header__desc">
+            <view class="font_mid  title">{{bookList.title}}</view>
+            <view class="font_min desc_info">主播：{{}}</view>
+            <view class="font_min desc_info">分类：AAA</view>
+            <view class="font_min desc_info">主播：AAA</view>
+            <view>
+                <button size="mini" class="btn_min {{is_faved?'btn_min_act':''}}" bindtap="bindCollect" hover-class="btn_min_hover"> {{is_faved?'已收藏':'我要收藏'}}</button>
+            </view>
+        </view>
+    </view>
+    <!-- 内容介绍 -->
+    <view class="lists-block">
+        <view class="lists-block__header col_ff7e00">内容简介:</view>
+        <view class="font_min">{{bookList.excerpt}}</view>
+    </view>
+    <!-- 书籍列表 -->
+    <view class="lists-block">
+        <view class="lists-list__cell single-lists_cell" wx:for="{{bookList.audio}}" wx:key="audio">
+            <image class="cell_image min_img" src="../../images/circle-stop_sm.png" wx:if="{{playing}}" bindtap="playAudio"></image>
+            <image class="cell_image min_img" src="../../images/circle-start_sm.png" wx:else bindtap="stopAudio"></image>
+            
+            <view class="lists-list__desc">
+                <text class="font_mid">三国演义张悦楷 001</text>
+            </view>
+        </view>
+    </view>
+</view>
+
+<template is="musicBar" data="{{musicData}}"></template>
