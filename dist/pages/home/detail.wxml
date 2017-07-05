@@ -7,10 +7,10 @@
         <view class="lists-header__desc">
             <view class="font_mid  title">{{bookList.title}}</view>
             <view class="font_min desc_info">主播：{{}}</view>
-            <view class="font_min desc_info">分类：AAA</view>
-            <view class="font_min desc_info">主播：AAA</view>
+            <view class="font_min desc_info">分类：{{resultData.current_category.name}}</view>
+            <view class="font_min desc_info">播放：123 次</view>
             <view>
-                <button size="mini" class="btn_min {{is_faved?'btn_min_act':''}}" bindtap="bindCollect" hover-class="btn_min_hover"> {{is_faved?'已收藏':'我要收藏'}}</button>
+                <button size="mini" class="btn_min {{is_faved?'btn_min_act':''}}" bindtap="bindColToggle" hover-class="btn_min_hover"> {{is_faved?'已收藏':'我要收藏'}}</button>
             </view>
         </view>
     </view>
@@ -21,15 +21,16 @@
     </view>
     <!-- 书籍列表 -->
     <view class="lists-block">
-        <view class="lists-list__cell single-lists_cell" wx:for="{{bookList.audio}}" wx:key="audio">
-            <image class="cell_image min_img" src="../../images/circle-stop_sm.png" wx:if="{{playing}}" bindtap="playAudio"></image>
-            <image class="cell_image min_img" src="../../images/circle-start_sm.png" wx:else bindtap="stopAudio"></image>
+        <view class="lists-list__cell single-lists_cell" wx:for="{{bookList.audio}}" wx:for-item="audio" >
+            <image class=" min_img" src="../../images/circle-stop_sm.png" wx:if="{{playing && playIndex == index && isCurPlay}}"  bindtap="stopAudio" ></image>
+            <image class=" min_img" src="../../images/circle-start_sm.png" wx:if="{{!playing ||playIndex != index ||!isCurPlay}}" data-index="{{index}}" data-type="1" bindtap="playAudio"></image>
             
             <view class="lists-list__desc">
-                <text class="font_mid">三国演义张悦楷 001</text>
+                <text class="font_mid">{{audio.name}}</text>
             </view>
         </view>
     </view>
 </view>
+<view style="height:142rpx;"></view>
 
 <template is="musicBar" data="{{musicData}}"></template>

@@ -1,21 +1,17 @@
 <!-- pages/home/articalList.wxml -->
 <view class="m-lists_bar">
-    <view class="lists-body">
+    <!--  <view class="lists-body">-->
         <!-- 推荐专辑 -->
-        <view class="lists-block" wx:for="{{listData}}" wx:key="item">
-            <navigator class="lists-block__header flex flex-between flex-center" url="articalList?id={{item.id}}">
-                <text class="title">{{item.name}}</text>
-                <view class="next">
-                    更多<view class="next_after">
-                </view>
+        <view class="lists-block">
+            <view class="lists-block__header flex flex-between flex-center">
+                <text class="title">{{listData.page_title}}</text>
             </view>
-        </navigator>
-        <view class="lists-block__content flex {{item.book.length>3?'flex-around':''}}">
-            <navigator class="lists-block__cell" wx:for="{{item.book}}" wx:for-item="book" url="detail?id={{book.id}}">
-                <image class="cell_image" src="{{book.thumbnail}}?imageView2/1/w/220/h/220"></image>
-                <view class="lists-block__text">{{book.title}}</view>
-            </navigator>
+            <view class="lists-block__content flex {{listData.books.length>3?'flex-around':''}}">
+                <navigator class="lists-block__cell" wx:for="{{listData.books}}" wx:for-item="book" url="detail?id={{book.id}}">
+                    <image class="cell_image" src="{{book.thumbnail}}?imageView2/1/w/220/h/220"></image>
+                    <view class="lists-block__text">{{book.title}}</view>
+                </navigator>
+            </view>
         </view>
-    </view>
-</view>
+    <!--</view>-->
 </view>

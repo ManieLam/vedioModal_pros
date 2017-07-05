@@ -1,120 +1,161 @@
 const Util = require("./util");
 
 /*全局数据*/
-let playList = {}; //播放列表
-let playData = {}; // 当前播放的数据
-let playIndex = 0; //播放条目
-let playState = false; //播放状态
+var musicData = {};
 
-// const musicPlayer = {};
+const musicPlayer = {
+    // constructor(props = {}) {
+    // },
+    lists: {}, //播放列表
+    current: {}, // 当前播放的数据
+    index: 0, //播放条目
+    state: false, //播放状态
+    songState: {}, //进度条状态
+    /*配置播放数据*/
+    setOption(options = {}) {
+        //数据存本地缓存
+        wx.setStorageSync("playData", options.current || this.current);
+        wx.setStorageSync("playList", options.lists || this.lists);
+        wx.setStorageSync("playing", options.state || this.state);
+        wx.setStorageSync("playIndex", options.index || this.index);
 
-class musicPlayer {
-    constructor(props = {}) {
-        this.playList = props.playList; //播放列表
-        this.playData = props.playData; // 当前播放的数据
-        this.playIndex = props.playIndex; //播放条目
-    }
+        //全局设置参数
+        options.current ? this.current = options.current : this.current;
+        options.lists ? this.lists = options.lists : this.lists;
+        options.state ? this.state = options.state : this.state;
+        options.index ? this.index = options.index : this.index;
 
-
-};
-
-
-
-/*配置播放数据*/
-musicPlayer.setOption = function(args) {
-    playList = args.playList;
-    playData = args.playData;
-    playIndex = args.index;
-    playState = args.playState;
-    //数据存本地缓存
-    wx.setStorageSync("playData", playData);
-    wx.setStorageSync("playList", playList);
-    wx.setStorageSync("playState", playState);
-    wx.setStorageSync("playIndex", index);
-    this.playMusic({
-        playList: playList,
-        index: playIndex,
-    })
-};
-
-
-
-/**
- * 播放
- * @param  options={playList,index}   {播放列表 ,播放条目}
- * */
-musicPlayer.playMusic = function(options = {}) {
-    wx.playBackgroundAudio({
-        dataUrl: playList[index].URL,
-        title: playList[index].name,
-        coverImgUrl: playList.thumbnail,
-    })
-};
-
-/*停止*/
-musicPlayer.stopMusic = function() {
-    wx.getBackgroundAudioPlayerState({ // 小程序播放控制api
-        success(res) {
-            let status = res.status;
-            console.info("stopMusic::", status)
-            if (status === 1) { // 正在播放中
-                // console.info("stopMusic::-11111")
-                wx.pauseBackgroundAudio(); //暂停播放
-                // that.setData({ isPlaying: false, });
-                wx.setStorageSync("playState", false)
-
-            } else if (status === 0) { // 正在暂停中
-                wx.playBackgroundAudio({ title: playData.name, coverImgUrl: playData.songImg, dataUrl: playData.songUrl });
-                // that.setData({ isPlaying: true, });
-                wx.setStorageSync("playState", true)
-
-                that.songPlay();
-            }
-        }
-    })
-
-};
-/*下一首*/
-musicPlayer.playNext = function() {
-    let index = wx.getStorageSync("playIndex");
-    index++;
-
-    if (index >= that.data.songlists.song.length) {
-        //列表播放结束，自动循环从第一首开始
-        index = 0;
-    }
-    console.info("playNext", that.data.selectedIndex, index)
-
-    that.setData({ selectedIndex: index })
-    that.playMusic();
-
-};
-
-/*上一首*/
-musicPlayer.playPrevious = function() {};
-
-/* 播放进度状态控制 */
-musicPlayer.songPlay = function() {
-        clearInterval(timer);
-        let timer = setInterval(function() {
-            wx.getBackgroundAudioPlayerState({ // 调用小程序播放控制api
-                success(res) {
-                    let status = res.status;
-                    if (status === 1) {
-                        that.setData({
-                            songState: {
-                                progress: res.currentPosition / res.duration * 100,
-                                currentPosition: Util.timeToString(res.currentPosition), // 调用转换时间格式
-                                duration: Util.timeToString(res.duration) // 调用转换时间格式
-                            }
-                        });
-                        // wx.setStorageSync('songState', that.data.songState);
-                    } else if (status === 0) {
-                        clearInterval(timer);
-                    }
-                }
-            })
-        }, 1000);
     },
 
-    module.exports = musicPlayer;
+    /**
+     * 播放
+     * @param  options={lists,index}   {播放书信息 ,播放条目}
+     * */
+    playMusic(options = {}) {
+        let lists = options.lists;
+        let index = this.index = options.index;
+        console.log("playMusic", index);
+        wx.playBackgroundAudio({
+            dataUrl: lists.audio[index].URL,
+            title: lists.audio[index].name,
+            // coverImgUrl: lists.thumbnail,
+        })
+        this.setOption({ current: lists.audio[index], lists: lists, state: true, index: index })
+
+    },
+
+    /*停止*/
+    stopMusic() {
+        let self = this;
+        wx.getBackgroundAudioPlayerState({ // 小程序播放控制api
+            success(res) {
+                let status = res.status;
+                // console.info("stopMusic::", status)
+
+                if (status === 1) { // 正在播放中
+                    // console.info("stopMusic1")
+                    wx.pauseBackgroundAudio(); //暂停播放
+                    wx.setStorageSync("playing", false)
+
+                } else if (status === 0) { // 正在暂停中
+                    // console.info("stopMusic2")
+
+                    wx.setStorageSync("playing", true)
+
+                    // wx.playBackgroundAudio({ title: playData.name, coverImgUrl: playData.songImg, dataUrl: playData.songUrl });
+                }
+
+            }
+        })
+
+    },
+    /*下一首*/
+    playNext() {
+        let index = this.index;
+        index++;
+        if (index == this.lists.audio.length) {
+            index = this.index = 0;
+        }
+        this.playMusic({ lists: this.lists, index: index });
+        wx.setStorageSync("playIndex", index)
+    },
+
+    /*上一首*/
+    playPrevious() {
+        let index = this.index;
+        index--;
+        if (index < 0) {
+            index = this.index = this.lists.audio.length - 1;
+        }
+        this.playMusic({ lists: this.lists, index: index });
+        wx.setStorageSync("playIndex", index)
+    },
+    /* 播放进度状态控制 */
+    // songPlay() {
+    //     clearInterval(timer);
+    //     let self = this;
+    //     let timer = setInterval(function() {
+    //         wx.getBackgroundAudioPlayerState({ // 调用小程序播放控制api
+    //             success(res) {
+    //                 let status = res.status;
+    //                 if (status === 1) { //正在播放才需要计算进度条
+
+    //                     let songState = {
+    //                         progress: res.currentPosition / res.duration * 100,
+    //                         currentPosition: Util.timeToString(res.currentPosition), // 调用转换时间格式
+    //                         duration: Util.timeToString(res.duration) // 调用转换时间格式 
+    //                     }
+    //                     wx.setStorageSync("songState", songState)
+    //                         // return songState;
+    //                         // wx.setStorageSync('songState', that.data.songState);
+    //                 } else if (status === 0) {
+    //                     console.log("songPlay0");
+    //                     clearInterval(timer);
+    //                 } else if (status === 2) {
+    //                     console.log("songPlay2");
+
+    //                 }
+    //             }
+    //         })
+    //     }, 1000);
+    //     //监听音乐停止
+    //     wx.onBackgroundAudioStop(() => {
+    //         console.info("停止")
+    //         this.playNext();
+    //     })
+    // },
+
+
+    /*获取当前播放数据*/
+    getMusicData() {
+        this.index = wx.getStorageSync("playIndex")
+        this.current = wx.getStorageSync("playData");
+        this.lists = wx.getStorageSync("playList")
+        this.state = wx.getStorageSync("playing")
+        this.songState = wx.getStorageSync("songState"); //记录最终的进度条
+
+
+        let musicData = {
+            index: this.index,
+            current: this.current,
+            playList: this.lists,
+            playing: this.state,
+            songState: this.songState,
+            // bookCat:
+        }
+
+        return musicData
+    },
+
+
+
+
+
+
+};
+
+
+
+
+
+module.exports = musicPlayer;

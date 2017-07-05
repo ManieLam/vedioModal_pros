@@ -50,7 +50,7 @@ var call = function(options = {}) {
  * @return {Promise}
  */
 const guard = function(fn) {
-    console.info(1111)
+    // console.info(1111)
     const self = this
     return function() {
         if (Auth.check()) {
@@ -134,7 +134,7 @@ const unlikeTopic = function unlikeTopic(id) {
 const favTopic = function favTopic(id) {
     return new Promise(function(resolve, reject) {
         wx.request({
-            url: API_HOST + 'api/mag.article.fav.json?access_token=' + Auth.token(),
+            url: API_HOST + 'api/mag.book.fav.json?access_token=' + Auth.token(),
             method: 'POST',
             data: {
                 post_id: id
@@ -167,7 +167,7 @@ const favTopic = function favTopic(id) {
 const unfavTopic = function unfavTopic(id) {
     return new Promise(function(resolve, reject) {
         wx.request({
-            url: API_HOST + 'api/mag.article.unfav.json?access_token=' + Auth.token(),
+            url: API_HOST + 'api/mag.book.unfav.json?access_token=' + Auth.token(),
             method: 'POST',
             data: {
                 post_id: id
@@ -264,7 +264,7 @@ const deleteReply = function deleteReply(id) {
 const queryFavList = function queryFavList(args) {
     return new Promise(function(resolve, reject) {
         wx.request({
-            url: API_HOST + 'api/mag.article.fav.list.json?access_token=' + Auth.token(),
+            url: API_HOST + 'api/mag.fav.list.json?access_token=' + Auth.token(),
             method: 'GET',
             data: args,
             success: function(res) {

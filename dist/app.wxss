@@ -123,8 +123,8 @@
 }
 
 .min_img {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
 }
 
 .mid_img {
@@ -494,6 +494,10 @@
 
 .c-newsList .c-news {
   border-bottom: 1rpx solid #e5e5e5;
+}
+
+page {
+  font-family: Helvetica, Arial, Hiragino Sans GB, Microsoft Yahei, \\5FAE\8F6F\96C5\9ED1, STHeiti, \\534E\6587\7EC6\9ED1, sans-serif;
 }
 
 .p-single {
