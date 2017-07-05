@@ -46,19 +46,18 @@ const musicPlayer = {
 
     /*停止*/
     stopMusic() {
-        let self = this;
         wx.getBackgroundAudioPlayerState({ // 小程序播放控制api
             success(res) {
                 let status = res.status;
                 // console.info("stopMusic::", status)
 
                 if (status === 1) { // 正在播放中
-                    // console.info("stopMusic1")
+                    console.info("stopMusic1")
                     wx.pauseBackgroundAudio(); //暂停播放
                     wx.setStorageSync("playing", false)
 
                 } else if (status === 0) { // 正在暂停中
-                    // console.info("stopMusic2")
+                    console.info("stopMusic2")
 
                     wx.setStorageSync("playing", true)
 

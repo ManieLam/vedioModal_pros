@@ -14,7 +14,7 @@
         <view class="info flex flex-between">
                 <view class="flex flex-cloumn flex_1">
                     <view class="col_88 font_mid">{{musicData.current.name}}</view>
-                    <view class="col_b2 font_min">{{musicData.singer||'佚名'}}</view>
+                    <view class="col_b2 font_min">{{musicData.current.writer||'佚名'}}</view>
                 </view>
             <view class="flex flex-center mar_r10">
                 <view class="icon icon-left icon-mar" catchtap="playPre"></view>

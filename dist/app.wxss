@@ -38,7 +38,7 @@
 
 .lists-block__text {
   color: #595757;
-  font-size: 12pt;
+  font-size: 14px;
   line-height: 1.4;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -91,7 +91,7 @@
 
 .next {
   color: #595757;
-  font-size: 12pt;
+  font-size: 14px;
 }
 
 .next::after {
@@ -114,7 +114,7 @@
 }
 
 .font_mid {
-  font-size: 12pt;
+  font-size: 14px;
 }
 
 .font_min {
