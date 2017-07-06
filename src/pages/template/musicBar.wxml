@@ -1,5 +1,5 @@
 <template name="musicBar">
-    <navigator url="detail?id={{musicData.playList.id}}" class="flex flex-between flex-cloumn music-bar"  wx:if="{{musicData.playList}}">
+    <view id="{{musicData.playList.id}}" class="flex flex-between flex-cloumn music-bar"  hover-class="none" wx:if="{{musicData.playList}}" bindtap="navigatorToDetail">
         <!-- 播放条 无播放音乐是不显示 -->
         <view class="control">
             <view class="progress">
@@ -12,9 +12,9 @@
         </view>
         <!-- end .control -->
         <view class="info flex flex-between">
-                <view class="flex flex-cloumn flex_1">
-                    <view class="col_88 font_mid">{{musicData.current.name}}</view>
-                    <view class="col_b2 font_min">{{musicData.current.writer||'佚名'}}</view>
+                <view class="flex flex-cloumn" style="width:60%">
+                    <view class="musicBar-title   ">{{musicData.current.name}}</view>
+                    <view class="musicBar-desc   ">{{musicData.current.writer||'佚名'}} · {{musicData.playList.title}}</view>
                 </view>
             <view class="flex flex-center mar_r10">
                 <view class="icon icon-left icon-mar" catchtap="playPre"></view>
@@ -24,5 +24,5 @@
             </view>
         </view>
         <!-- end footer .info -->
-    </navigator>
+    </view>
 </template>

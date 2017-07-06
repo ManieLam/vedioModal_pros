@@ -26,6 +26,26 @@ const musicPlayer = {
         options.index ? this.index = options.index : this.index;
 
     },
+    /*获取当前播放条数据*/
+    getMusicData() {
+        this.index = wx.getStorageSync("playIndex")
+        this.current = wx.getStorageSync("playData");
+        this.lists = wx.getStorageSync("playList")
+        this.state = wx.getStorageSync("playing")
+        this.songState = wx.getStorageSync("songState"); //记录最终的进度条
+
+
+        let musicData = {
+            index: this.index,
+            current: this.current,
+            playList: this.lists,
+            playing: this.state,
+            songState: this.songState,
+            // bookCat:
+        }
+
+        return musicData
+    },
 
     /**
      * 播放
@@ -34,7 +54,7 @@ const musicPlayer = {
     playMusic(options = {}) {
         let lists = options.lists;
         let index = this.index = options.index;
-        console.log("playMusic", index);
+        console.log("playMusic", lists, index);
         wx.playBackgroundAudio({
             dataUrl: lists.audio[index].URL,
             title: lists.audio[index].name,
@@ -125,26 +145,7 @@ const musicPlayer = {
     // },
 
 
-    /*获取当前播放数据*/
-    getMusicData() {
-        this.index = wx.getStorageSync("playIndex")
-        this.current = wx.getStorageSync("playData");
-        this.lists = wx.getStorageSync("playList")
-        this.state = wx.getStorageSync("playing")
-        this.songState = wx.getStorageSync("songState"); //记录最终的进度条
 
-
-        let musicData = {
-            index: this.index,
-            current: this.current,
-            playList: this.lists,
-            playing: this.state,
-            songState: this.songState,
-            // bookCat:
-        }
-
-        return musicData
-    },
 
 
 

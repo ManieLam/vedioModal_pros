@@ -1,7 +1,8 @@
 // pages/home/articalList.js
 const App = getApp();
 let that;
-const Api = require('../../utils/Api');
+const Require = require('../../utils/Require');
+let isPull = false;
 
 Page({
 
@@ -12,16 +13,22 @@ Page({
         let params = Object.assign({}, {
             cat: that.data.id,
         }, options)
-        Api.call({
+        Require.call({
             api: 'api/mag.book.list.json',
             data: params
         }).then(res => {
             // wx.setNavigationBarTitle({ title: res.page_title })
+            let booksList = isPull ? res.books : [].concat(that.data.booksList, res.books);
+
             that.setData({
                 listData: res,
+                booksList: res.books,
                 share_title: res.share_title,
+                next_first: res.next_first,
+                next_cursor: res.next_cursor,
             })
-            console.log("listData", that.data.listData);
+            wx.stopPullDownRefresh();
+            // console.log("listData", that.data.listData);
         })
     },
     onLoad: function(options) {
@@ -30,23 +37,22 @@ Page({
         that.getList();
     },
 
-    onReady: function() {
-
-    },
-
-    onShow: function() {
-
-    },
 
     onPullDownRefresh: function() {
-
+        if (!that.data.next_first) return;
+        isPull = true;
+        that.getList();
     },
 
     onReachBottom: function() {
-
+        if (!that.data.next_cursor) return;
+        that.getList({ cursor: that.data.next_cursor });
     },
 
     onShareAppMessage: function() {
-
+        return {
+            title: that.data.share_title,
+            path: "/pages/home/articalList?id=" + that.data.id
+        }
     }
 })

@@ -30,7 +30,7 @@
                     <view class="next"> 更多<view class="next_after"> </view> </view>
                 </navigator>
                 <view class="lists-block__content flex {{item.book.length>2?'flex-around':''}}">
-                    <navigator class="lists-block__cell" wx:for="{{item.book}}" wx:for-item="book" url="detail?id={{book.id}}">
+                    <navigator class="lists-block__cell" wx:for="{{item.book}}" wx:for-item="book" wx:key="" url="detail?id={{book.id}}">
                         <image class="cell_image" src="{{book.thumbnail}}?imageView2/1/w/220/h/220"></image>
                         <view class="lists-block__text">{{book.title}}</view>
                     </navigator>
@@ -61,8 +61,8 @@
 <!-- tab=1 收藏 -->
     <view class="lists-section" hidden="{{currentTab !==1 }}">
        <view class="lists-block"  > 
-            <view class="lists-block__content flex {{colList.length>2?'flex-around':''}}">
-                <navigator class="lists-block__cell" wx:for="{{colList}}" wx:for-item="book" url="detail?id={{book.id}}">
+            <view class="lists-block__content flex flex-between ">
+                <navigator class="lists-block__cell" wx:for="{{colList}}" wx:for-item="book" wx:key="" url="detail?id={{book.id}}">
                     <image class="cell_image" src="{{book.thumbnail}}?imageView2/1/w/220/h/220"></image>
                     <view class="lists-block__text">{{book.title}}</view>
                 </navigator>
@@ -71,10 +71,11 @@
     </view>
 
 </view>
+<view style="height:142rpx;" wx:if="{{musicData.playList}}"></view>
  <!--音乐播放条 -->
 <template is="musicBar" data="{{musicData}}"></template>
 
-<template is="news" data="{{...newsList,mode}}"></template>
+<template is="news" data="{{topics,mode,isDone}}"></template>
 
 
 

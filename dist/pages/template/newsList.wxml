@@ -1,7 +1,7 @@
 <template name="news">
     <view wx:if="{{mode}}" class="c-newsList ">
         <view class="c-news" wx:for="{{topics}}" wx:for-index="i" wx:for-item="topic" wx:key="topic.id">
-            <navigator url="../../tag/index?tag_id={{topic.tag.id}}" class="c-news__header">
+            <navigator url="../tag/index?tag_id={{topic.tag.id}}" class="c-news__header">
                 <view class="c-news__account">
                     <image class="c-news__account__avatar" src="{{topic.tag.thumb}}" background-size="cover"></image>
                     <view class="c-news__account__content">
@@ -12,7 +12,7 @@
                 <view class="c-news__after"></view>
             </navigator>
             <!-- END .c-news__header -->
-            <navigator url="../../single/index?id={{topic.id}}" class="c-news__body">
+            <navigator url="../single/index?id={{topic.id}}" class="c-news__body">
                 <view class="c-news__text">
                     <view wx:for="{{topic.texts}}" wx:key="text" wx:for-item="text" wx:for-index="j">
                         {{text}}
