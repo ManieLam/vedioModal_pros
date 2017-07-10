@@ -6,31 +6,39 @@
 //block列表
 .lists-block {
     margin-top: 10px;
+    padding-bottom: 10px;
     padding: 0 10px 10px;
     background: #fff;
 }
 
 .lists-block__header {
     line-height: 2.2;
+    // padding: 0 10px;
 }
 
 .lists-block__content {
-    flex-wrap: wrap;
-    flex-grow: 1;
     padding-top: 5px;
+    // width: 100%;
+    text-align: center;
+    // margin: 0 10px;
+    @include clearfix();
 }
 
 .lists-block__cell {
-    width: 30.98%;
-    // height: 290rpx;
-    margin-right: 10px;
+    float: left;
+    width: 32%;
+    height: 290rpx;
     margin-bottom: 10px;
+    padding-right: 10px;
 }
 
 .lists-block__cell:nth-child(3n) {
-    margin-right: 0;
+    padding-right: 0;
 }
 
+// .lists-block__cell:nth-child(2n) {
+//     margin-left: 10px;
+// }
 .lists-block__text {
     color: $font_desc_h;
     font-size: $font_mid;

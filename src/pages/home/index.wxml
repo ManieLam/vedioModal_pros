@@ -61,7 +61,7 @@
 <!-- tab=1 收藏 -->
     <view class="lists-section" hidden="{{currentTab !==1 }}">
        <view class="lists-block"  > 
-            <view class="lists-block__content flex flex-between ">
+            <view class="lists-block__content">
                 <navigator class="lists-block__cell" wx:for="{{colList}}" wx:for-item="book" wx:key="" url="detail?id={{book.id}}">
                     <image class="cell_image" src="{{book.thumbnail}}?imageView2/1/w/220/h/220"></image>
                     <view class="lists-block__text">{{book.title}}</view>

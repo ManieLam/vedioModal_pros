@@ -6,7 +6,12 @@ const Auth = require('./utils/Auth')
 App({
     onLaunch: function() {},
     globalData: {
-        userInfo: Auth.user()
+        userInfo: Auth.user(),
+        playIndex: null,
+        playData: null,
+        playList: null,
+        playing: null,
+        songState: null,
     },
 
     copyUrl: function(url) {
